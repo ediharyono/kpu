@@ -1,0 +1,307 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>KPU Sidalih - null</title>
+        <script type="text/javascript" src="/webjars/jquery/2.1.4/jquery.min.js"></script>
+        <link href="/inspinia/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/inspinia/font-awesome/css/font-awesome.css" rel="stylesheet" />
+        <link href="/inspinia/css/animate.css" rel="stylesheet" />
+        <link href="/inspinia/css/style.css" rel="stylesheet" />
+        <link href="/css/datetimepicker.min.css" rel="stylesheet" type="text/css" />
+        <link href="/css/dataTables.checkboxes.css" rel="stylesheet" type="text/css" />
+        <link href="/inspinia/css/plugins/dataTables/datatables.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.3/css/select.dataTables.min.css" />
+      </head>
+<body>
+<div id="wrapper">
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <ul class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <span>
+                        <img alt="image" class="img-circle" src="/inspinia/img/logo-kpu-s.png" style="width: 60px; height: 60px" />
+                    </span>
+                </div>
+                <div class="logo-element">KPU</div>
+            </li>
+            <li>
+                <a href="/home">
+                    <i class="fa fa-home"></i> <span class="nav-label">Beranda</span>
+                </a>
+            </li>
+            
+            
+        </ul>
+    </nav>
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom">
+        <nav class="navbar" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+            </div>
+            <div class="navbar-brand">Sistem Informasi Data Pemilih</div>
+
+            
+        </nav>
+    </div>
+        <div>
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-sm-6">
+                <h2></h2>
+            </div>
+        </div>
+        
+    </div>
+        <div class="wrapper wrapper-content">
+            <div class="row">
+                <div class="col-lg-6 col-lg-offset-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title"><h4 class="text-center">403</h4></div>
+                        <div class="ibox-content">
+                            <div class="middle-box text-center animated fadeInDown" style="margin-top:0">
+                                <h2><i class="fa fa-exclamation-triangle fa-2x"></i> </h2>
+                                <h3 class="font-bold">Terjadi Kesalahan</h3>
+                                <div class="error-desc">
+                                    <div>Halo <strong>null</strong>, <br />
+                                        Silahkan hubungi Administrator KPU Pusat terkait hal ini.
+                                    </div>
+                                    <br />
+                                    Kembali ke beranda: <br />
+                                    <a class="btn btn-lg btn-success m-t" href="/home">Beranda</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    <div class="footer">
+        <div>
+            <strong>Hak Cipta</strong>
+            &copy; <span>2022</span>
+            KPU - Republik Indonesia
+        </div>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-92016010-5"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'UA-92016010-5');
+        </script>
+    </div>
+    
+    </div>
+</div>
+
+
+
+        <!-- Mainly scripts -->
+        <script src="/inspinia/js/bootstrap.min.js"></script>
+        <script src="/inspinia/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+        <script src="/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+        <!-- Custom and plugin javascript -->
+        <script src="/inspinia/js/inspinia.js"></script>
+        <script src="/inspinia/js/plugins/pace/pace.min.js"></script>
+        <script type="text/javascript" src="/webjars/datatables/1.10.13/js/jquery.dataTables.js"></script>
+        <script type="text/javascript" src="/webjars/datatables/1.10.13/js/dataTables.bootstrap.js"></script>
+        <script src="/js/dataTables.checkboxes.js"></script>
+
+        <script>
+            $(document).ready(
+                function() {
+                    /*$("#filterWilayah").change(function() {
+                        $("#filterWilayah").submit();
+                    });*/
+                    var isAdminPusat = $("#isAdminPusat").val();
+                    if (!!$("#ProvInTable").val()) {
+                        sendAjaxRequestProvGlobal();
+                    }
+                    if (!!$("#KabuInTable").val()) {
+                        sendAjaxRequestKabGlobal();
+                    }
+                    if (!!$("#KecaInTable").val()) {
+                        sendAjaxRequestKecGlobal();
+                    }
+                    $("#idProvinsiGlobal").change(function() {
+                        if (!$("#ProvInTable").val()) {
+                            console.log("masuk sini");
+                            sendAjaxRequestProvGlobal();
+                            if (isAdminPusat){
+                                resetBelowWhenProvChanged();
+                            }
+                        }
+                    });
+                    $("#idKabupatenGlobal").change(function() {
+                        // if (!$("#KabInTable").val()) {
+                            // sendAjaxRequestKab();
+                            sendAjaxRequestKabSpecificUser();
+                            if (isAdminPusat) {
+                                resetBelowWhenKabChanged();                                
+                            }
+                    // }
+                    });
+                    $("#idKecamatanGlobal").change(function() {
+                            sendAjaxRequestKecGlobal();
+                    });
+                    $("#idDesaKelurahanGlobal").change(function() {
+                        $("#filterWilayah").submit();
+                    });
+                }
+            );
+            function resetBelowWhenProvChanged() {
+                console.log("resetBelowWhenProvChanged..");
+                $("#idKecamatanGlobal").empty();
+                var option = "<option value="+'-1'+">" + "--Pilih Kecamatan--"  +  "</option>";
+                $("#idKecamatanGlobal").append(option);
+                $('#idKecamatanGlobal').val('-1');
+                $("#idDesaKelurahanGlobal").empty();
+                var option = "<option value="+'-1'+">" + "--Pilih Kelurahan--"  +  "</option>";
+                $("#idDesaKelurahanGlobal").append(option);
+                $('#idDesaKelurahanGlobal').val('-1');
+            };
+            function resetBelowWhenKabChanged() {
+                console.log("resetBelowWhenKabChanged..");                
+                $("#idKecamatanGlobal").empty();
+                var option = "<option value="+'-1'+">" + "--Pilih Kecamatan--"  +  "</option>";
+                $("#idKecamatanGlobal").append(option);
+                $('#idKecamatanGlobal').val('-1');
+
+                $("#idDesaKelurahanGlobal").empty();
+                var option = "<option value="+'-1'+">" + "--Pilih Kelurahan--"  +  "</option>";
+                $("#idDesaKelurahanGlobal").append(option);
+                $('#idDesaKelurahanGlobal').val('-1');
+            };
+            function sendAjaxRequestProvGlobal(){
+                console.log('test log');
+                var provinsi = $("#idProvinsiGlobal").val()+"-"+$("#idUserInfo").val();
+                var isAdminPusat = $("#isAdminPusat").val();
+                $.get( "/wilayah/getListKabupatenByProvinsi?provinsi=" + provinsi, function( data ) {
+                    $("#idKabupatenGlobal").empty();
+                    console.log("data respond = " + data);
+                    if (!(data.length > 0)) {
+                        console.log("kab empty list");
+                        var option = "<option value="+'-1'+">" + "--Pilih Kabupaten--"  +  "</option>";
+                        $("#idKabupatenGlobal").append(option);
+                    }
+                    data.forEach(function(item, i) {
+                        if (i == 0){
+                            if (item.allWilayah){
+                                var option = "<option value="+'-1'+">" + "--Pilih Kabupaten--"  +  "</option>";
+                                $("#idKabupatenGlobal").append(option);
+                            }
+                            else {
+                                 $("#idKecamatanGlobal").empty();
+                                 console.log("child wilayah = " + item.childWilayah);
+                                 console.log(item.childWilayah.length);
+                                 item.childWilayah.forEach(function(item, i){
+                                    if (i == 0){
+                                       if (item.allWilayah){
+                                            var option = "<option value="+'-1'+">" + "--Pilih Kecamatan--"  +  "</option>";
+                                            $("#idKecamatanGlobal").append(option);
+                                        }
+                                        else {
+                                            $("#idDesaKelurahanGlobal").empty();
+                                            item.childWilayah.forEach(function(item, i){
+                                                if (i == 0){
+                                                    var option = "<option value="+'-1'+">" + "--Pilih Kelurahan--"  +  "</option>";
+                                                    $("#idDesaKelurahanGlobal").append(option);
+                                                }
+                                                var option = "<option value=" + item.id + ">" + item.namaWilayah +  "</option>";
+                                                $("#idDesaKelurahanGlobal").append(option);
+                                            });
+                                        }
+                                    }
+                                    var option = "<option value=" + item.id + ">" + item.namaWilayah +  "</option>";
+                                    $("#idKecamatanGlobal").append(option); 
+                                 });                                                   
+                            }
+                          }
+                            var option = "<option value=" + item.id + ">" + item.namaWilayah +  "</option>";
+                            $("#idKabupatenGlobal").append(option);
+                    });
+                    $("#filterWilayah").submit();
+                });
+            };
+
+            function sendAjaxRequestKabSpecificUser(){
+                console.log('test log');
+                var kabupaten = $("#idKabupatenGlobal").val()+"-"+$("#idUserInfo").val();
+                var isAdminPusat = $("#isAdminPusat").val();
+                $.get( "/wilayah/getListKecamatanByKabupatenByUser?kabupaten=" + kabupaten, function( data ) {
+                    $("#idKecamatanGlobal").empty();
+                    data.forEach(function(item, i) {
+                        console.log("index = " + i);
+                        if (i == 0){
+                            if (item.allWilayah){
+                                var option = "<option value="+'-1'+">" + "--Pilih Kecamatan--"  +  "</option>";
+                                $("#idKecamatanGlobal").append(option);
+                            }
+                            else {
+                                $("#idDesaKelurahanGlobal").empty();
+                                item.childWilayah.forEach(function(item, i){
+                                    if (i == 0){
+                                        var option = "<option value="+'-1'+">" + "--Pilih Kelurahan--"  +  "</option>";
+                                        $("#idDesaKelurahanGlobal").append(option);
+                                    }
+                                    var option = "<option value=" + item.id + ">" + item.namaWilayah +  "</option>";
+                                    $("#idDesaKelurahanGlobal").append(option);
+                                });
+                            }
+                        }
+                        var option = "<option value=" + item.id + ">" + item.namaWilayah +  "</option>";
+                        $("#idKecamatanGlobal").append(option);
+                    });
+                    if ($("#idKabupatenGlobal").val() == -1){
+                        resetBelowWhenProvChanged();
+                    }
+                    console.log('sendAjaxRequestKabSpecificUser finished');  
+                    console.log($("#idKabupatenGlobal").val());
+                    $("#filterWilayah").submit();
+                });
+
+            };
+
+            function sendAjaxRequestKabGlobal(){
+                var kabupaten = $("#idKabupatenGlobal").val();
+                $.get( "/wilayah/getListKecamatanByKabupaten?kabupaten=" + kabupaten, function( data ) {
+                    $("#idKecamatanGlobal").empty();
+                    var option = "<option value="+'-1'+">" + "--Pilih Kecamatan--"  +  "</option>";
+                    $("#idKecamatanGlobal").append(option);
+                    data.forEach(function(item, i) {
+                        var option = "<option value=" + item.id + ">" + item.namaWilayah +  "</option>";
+                        $("#idKecamatanGlobal").append(option);
+                    });
+                    $("#filterWilayah").submit();
+                });
+            };
+
+            function sendAjaxRequestKecGlobal(){
+                var kecamatan = $("#idKecamatanGlobal").val();
+                $.get( "/wilayah/getListKelurahanByKecamatan?kecamatan=" + kecamatan, function( data ) {
+                    $("#idDesaKelurahanGlobal").empty();
+                    var option = "<option value="+'-1'+">" + "--Pilih Kelurahan--"  +  "</option>";
+                    $("#idDesaKelurahanGlobal").append(option);
+                    data.forEach(function(item, i) {
+                        var option = "<option value=" + item.id + ">" + item.namaWilayah +  "</option>";
+                        $("#idDesaKelurahanGlobal").append(option);
+                    });
+                    $("#filterWilayah").submit();
+                });
+            };
+
+        </script>
+    
+
+</body>
+</html>
